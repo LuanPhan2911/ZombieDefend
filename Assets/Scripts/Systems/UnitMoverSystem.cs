@@ -14,12 +14,15 @@ partial struct UnitMoverSystem : ISystem
         foreach (var (localTrasform, moveSpeed, velocity) in
             SystemAPI.Query<RefRW<LocalTransform>, RefRO<MoveSpeed>, RefRW<PhysicsVelocity>>())
         {
-            float3 targetPosition = localTrasform.ValueRO.Position + new float3(5f, 0, 0);
+            float3 targetPosition = MouseWorldPosition.Instance.GetPosition();
             float3 moveDirecttion = targetPosition - localTrasform.ValueRO.Position;
             moveDirecttion = math.normalize(moveDirecttion);
 
+            float rotateSpeed = 5f;
 
-            localTrasform.ValueRW.Rotation = quaternion.LookRotation(moveDirecttion, math.up());
+            localTrasform.ValueRW.Rotation =
+                math.slerp(localTrasform.ValueRW.Rotation,
+                quaternion.LookRotation(moveDirecttion, math.up()), rotateSpeed * SystemAPI.Time.DeltaTime);
 
             velocity.ValueRW.Linear = moveDirecttion * moveSpeed.ValueRO.value;
 
