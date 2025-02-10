@@ -1,6 +1,7 @@
 using System;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
@@ -65,7 +66,8 @@ public class UnitSelectionManager : MonoBehaviour
             {
                 // select single unit
                 UnityEngine.Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                entityQuery = entityManager.CreateEntityQuery(typeof(PhysicsWorldSingleton));
+                entityQuery = entityManager.CreateEntityQuery(
+                    new EntityQueryBuilder(Allocator.Temp).WithAll<PhysicsWorldSingleton>());
                 PhysicsWorldSingleton physicsWorldSingleton = entityQuery.GetSingleton<PhysicsWorldSingleton>();
                 CollisionWorld collisionWorld = physicsWorldSingleton.CollisionWorld;
 
@@ -100,10 +102,12 @@ public class UnitSelectionManager : MonoBehaviour
 
             NativeArray<UnitMover> unitMoverArray = entityQuery.ToComponentDataArray<UnitMover>(Allocator.Temp);
             NativeArray<Entity> entityArray = entityQuery.ToEntityArray(Allocator.Temp);
+
+            NativeArray<float3> movePositionArray = GenerateMovePositionArray(mouseWorldPosition, entityArray.Length);
             for (int i = 0; i < unitMoverArray.Length; i++)
             {
                 UnitMover unitMover = unitMoverArray[i];
-                unitMover.targtePosition = mouseWorldPosition;
+                unitMover.targtePosition = movePositionArray[i];
                 unitMoverArray[i] = unitMover;
             }
             entityQuery.CopyFromComponentDataArray(unitMoverArray);
@@ -123,5 +127,40 @@ public class UnitSelectionManager : MonoBehaviour
             Mathf.Max(selectionStartMousePosition.y, selectionEndMousePosition.y)
         );
         return new Rect(lowerLeftCorner, upperRightCorner - lowerLeftCorner);
+    }
+
+    private NativeArray<float3> GenerateMovePositionArray(float3 targetPosition, int positionCount)
+    {
+        NativeArray<float3> movePositionArray = new NativeArray<float3>(positionCount, Allocator.Temp);
+        if (positionCount == 0)
+        {
+            return movePositionArray;
+        }
+        movePositionArray[0] = targetPosition;
+        if (positionCount == 1)
+        {
+            return movePositionArray;
+        }
+        float ringSize = 2.2f;
+        int ring = 0, ringIndex = 1;
+        while (ringIndex < positionCount)
+        {
+            int ringPositionCount = 3 + ring * 2;
+            for (int i = 0; i < ringPositionCount; i++)
+            {
+                float angle = i * (math.PI * 2 / ringPositionCount);
+                float3 ringVector = math.rotate(quaternion.RotateY(angle), new float3(ringSize * (ring + 1), 0, 0));
+                float3 ringPosition = targetPosition + ringVector;
+                movePositionArray[ringIndex] = ringPosition;
+                ringIndex++;
+                if (ringIndex >= positionCount)
+                {
+                    break;
+                }
+            }
+            ring++;
+        }
+        return movePositionArray;
+
     }
 }
