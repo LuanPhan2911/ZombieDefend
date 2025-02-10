@@ -1,6 +1,7 @@
 using System;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -37,24 +38,58 @@ public class UnitSelectionManager : MonoBehaviour
                 entityManager.SetComponentEnabled<Selected>(entityArray[i], false);
             }
 
-            entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<LocalTransform, Unit>()
+            Rect selectionArea = GetSelectionAreaRect();
+            float selectionAreaSize = selectionArea.width * selectionArea.height;
+            float minAreaSize = 50;
+            if (selectionAreaSize > minAreaSize)
+            {
+                // select multiple units
+                entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<LocalTransform, Unit>()
               .WithPresent<Selected>().Build(entityManager);
 
-            NativeArray<LocalTransform> localTransformArray = entityQuery.ToComponentDataArray<LocalTransform>(Allocator.Temp);
-            entityArray = entityQuery.ToEntityArray(Allocator.Temp);
-            for (int i = 0; i < localTransformArray.Length; i++)
-            {
-                LocalTransform localTransform = localTransformArray[i];
-                Vector2 screenPosition = Camera.main.WorldToScreenPoint(localTransform.Position);
-                if (GetSelectionAreaRect().Contains(screenPosition))
+                NativeArray<LocalTransform> localTransformArray = entityQuery.ToComponentDataArray<LocalTransform>(Allocator.Temp);
+                entityArray = entityQuery.ToEntityArray(Allocator.Temp);
+                for (int i = 0; i < localTransformArray.Length; i++)
                 {
-                    //unit is inside selected area
-                    entityManager.SetComponentEnabled<Selected>(entityArray[i], true);
+                    LocalTransform localTransform = localTransformArray[i];
+                    Vector2 screenPosition = Camera.main.WorldToScreenPoint(localTransform.Position);
+                    if (GetSelectionAreaRect().Contains(screenPosition))
+                    {
+                        //unit is inside selected area
+                        entityManager.SetComponentEnabled<Selected>(entityArray[i], true);
+                    }
+
+                }
+            }
+            else
+            {
+                // select single unit
+                UnityEngine.Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                entityQuery = entityManager.CreateEntityQuery(typeof(PhysicsWorldSingleton));
+                PhysicsWorldSingleton physicsWorldSingleton = entityQuery.GetSingleton<PhysicsWorldSingleton>();
+                CollisionWorld collisionWorld = physicsWorldSingleton.CollisionWorld;
+
+                uint layerMask = 1u << LayerMask.NameToLayer("Unit");
+                RaycastInput raycastInput = new RaycastInput
+                {
+                    Start = mouseRay.origin,
+                    End = mouseRay.origin + mouseRay.direction * 1000,
+                    Filter = new CollisionFilter
+                    {
+                        BelongsTo = ~0u,
+                        CollidesWith = layerMask,
+                        GroupIndex = 0
+                    }
+                };
+                if (collisionWorld.CastRay(raycastInput, out Unity.Physics.RaycastHit hit))
+                {
+                    if (entityManager.HasComponent<Unit>(hit.Entity))
+                    {
+                        entityManager.SetComponentEnabled<Selected>(hit.Entity, true);
+                    }
                 }
 
             }
-
-
         }
         if (Input.GetMouseButtonDown(1))
         {
