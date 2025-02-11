@@ -16,13 +16,13 @@ partial struct UnitSelectedSystem : ISystem
         {
             if (selected.ValueRO.onDeselected)
             {
-                UnityEngine.Debug.Log("Deselected");
+
                 RefRW<LocalTransform> selectedVisualLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualEntity);
                 selectedVisualLocalTransform.ValueRW.Scale = 0f;
             }
             else if (selected.ValueRO.onSelected)
             {
-                UnityEngine.Debug.Log("Selected");
+
                 RefRW<LocalTransform> selectedVisualLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualEntity);
                 selectedVisualLocalTransform.ValueRW.Scale = selected.ValueRO.showScale;
             }
