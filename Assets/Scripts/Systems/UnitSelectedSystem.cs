@@ -20,7 +20,7 @@ partial struct UnitSelectedSystem : ISystem
                 RefRW<LocalTransform> selectedVisualLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualEntity);
                 selectedVisualLocalTransform.ValueRW.Scale = 0f;
             }
-            else if (selected.ValueRO.onSelected)
+            if (selected.ValueRO.onSelected)
             {
 
                 RefRW<LocalTransform> selectedVisualLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualEntity);
