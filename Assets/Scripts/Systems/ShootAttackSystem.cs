@@ -22,7 +22,9 @@ partial struct ShootAttackSystem : ISystem
             }
             shootAttack.ValueRW.timer = shootAttack.ValueRO.timerMax;
 
-            UnityEngine.Debug.Log("Shoot!");
+            int damage = 1;
+            RefRW<Health> health = SystemAPI.GetComponentRW<Health>(target.ValueRO.targetEntity);
+            health.ValueRW.healthAmount -= damage;
 
         }
 
