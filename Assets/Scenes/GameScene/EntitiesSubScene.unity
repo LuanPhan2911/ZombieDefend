@@ -511,6 +511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletGameObject: {fileID: 7071670487230271464, guid: b714203ecdb990940bdb1f2944e1305a, type: 3}
+  zombieGameObject: {fileID: 1369815041348027683, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
 --- !u!4 &1863192171
 Transform:
   m_ObjectHideFlags: 0
@@ -535,7 +536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2102537010}
-  - component: {fileID: 2102537009}
+  - component: {fileID: 2102537011}
   m_Layer: 0
   m_Name: ZombieSpawner
   m_TagString: Untagged
@@ -543,18 +544,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2102537009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102537008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba6d1a4b257eaf34d9d7f7637b35f13e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2102537010
 Transform:
   m_ObjectHideFlags: 0
@@ -570,70 +559,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2137220634
-PrefabInstance:
+--- !u!114 &2102537011
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1369815041348027683, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_Name
-      value: ZombieUnit
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 16.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 17.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8578590578234171536, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 91f11cda410453641a951c1d05ae9e8d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102537008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4279de100ed584a899d3c87451380d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerMax: 1.5
+  randomWalkingMinDistance: 3
+  randomWalkingMaxDistance: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1863192171}
   - {fileID: 2102537010}
-  - {fileID: 2137220634}
   - {fileID: 627867811}
   - {fileID: 321349071}
   - {fileID: 658986197}
