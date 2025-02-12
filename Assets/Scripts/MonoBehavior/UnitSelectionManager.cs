@@ -120,7 +120,7 @@ public class UnitSelectionManager : MonoBehaviour
             for (int i = 0; i < unitMoverArray.Length; i++)
             {
                 UnitMover unitMover = unitMoverArray[i];
-                unitMover.targtePosition = movePositionArray[i];
+                unitMover.targetPosition = movePositionArray[i];
                 unitMoverArray[i] = unitMover;
             }
             entityQuery.CopyFromComponentDataArray(unitMoverArray);

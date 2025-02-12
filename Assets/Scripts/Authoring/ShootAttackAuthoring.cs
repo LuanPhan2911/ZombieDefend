@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ShootAttackAuthoring : MonoBehaviour
@@ -6,6 +7,8 @@ public class ShootAttackAuthoring : MonoBehaviour
 
     public float timerMax;
     public int damgeAmount;
+    public float attackDistance;
+    public Transform bulletSpawnTransform;
     public class ShootAttackAuthoringBaker : Baker<ShootAttackAuthoring>
     {
         public override void Bake(ShootAttackAuthoring authoring)
@@ -15,7 +18,9 @@ public class ShootAttackAuthoring : MonoBehaviour
             {
                 timer = authoring.timerMax,
                 timerMax = authoring.timerMax,
-                damgeAmount = authoring.damgeAmount
+                damgeAmount = authoring.damgeAmount,
+                attackDistance = authoring.attackDistance,
+                bulletSpawnLocalPosition = authoring.bulletSpawnTransform.localPosition
             });
         }
     }
@@ -26,6 +31,8 @@ public struct ShootAttack : IComponentData
     public float timer;
     public float timerMax;
     public int damgeAmount;
+    public float attackDistance;
+    public float3 bulletSpawnLocalPosition;
 }
 
 

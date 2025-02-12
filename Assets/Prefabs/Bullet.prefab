@@ -133,8 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c07e88653451e46b1dbf73ddcd9e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
-  damageAmount: 1
+  speed: 60
 --- !u!114 &1276782726454733409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf70af07a6a76084787d40587e178d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetGameObject: {fileID: 0}
 --- !u!114 &3467050628468641526
 MonoBehaviour:
   m_ObjectHideFlags: 0
