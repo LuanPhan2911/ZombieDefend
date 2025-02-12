@@ -254,6 +254,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerMax: 0.2
-  damgeAmount: 0
+  damgeAmount: 5
   attackDistance: 13
   bulletSpawnTransform: {fileID: 7352722379614310190}

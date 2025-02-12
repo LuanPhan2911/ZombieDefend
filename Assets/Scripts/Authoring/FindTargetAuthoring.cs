@@ -15,7 +15,6 @@ public class FindTargetAuthoring : MonoBehaviour
             {
                 range = authoring.range,
                 targetFaction = authoring.targetFaction,
-                timer = authoring.timerMax,
                 timerMax = authoring.timerMax
             });
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 class EntitiesReferencesAuthoring : MonoBehaviour
 {
     public GameObject bulletGameObject;
+    public GameObject zombieGameObject;
     public class EntitiesReferencesAuthoringBaker : Baker<EntitiesReferencesAuthoring>
     {
         public override void Bake(EntitiesReferencesAuthoring authoring)
@@ -11,14 +12,17 @@ class EntitiesReferencesAuthoring : MonoBehaviour
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new EntitiesReferences
             {
-                bulletPrefabEntity = GetEntity(authoring.bulletGameObject, TransformUsageFlags.Dynamic)
+                bulletEntityPrefab = GetEntity(authoring.bulletGameObject, TransformUsageFlags.Dynamic),
+                zombieEntityPrefab = GetEntity(authoring.zombieGameObject, TransformUsageFlags.Dynamic),
             });
         }
     }
 }
 public struct EntitiesReferences : IComponentData
 {
-    public Entity bulletPrefabEntity;
+    public Entity bulletEntityPrefab;
+    public Entity zombieEntityPrefab;
+
 }
 
 
