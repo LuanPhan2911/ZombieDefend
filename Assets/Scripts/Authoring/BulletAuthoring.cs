@@ -4,7 +4,6 @@ using UnityEngine;
 class BulletAuthoring : MonoBehaviour
 {
     public int speed;
-    public int damageAmount;
     public class BulletAuthoringBaker : Baker<BulletAuthoring>
     {
         public override void Bake(BulletAuthoring authoring)
@@ -13,7 +12,7 @@ class BulletAuthoring : MonoBehaviour
             AddComponent(entity, new Bullet
             {
                 speed = authoring.speed,
-                damageAmount = authoring.damageAmount
+
             });
         }
     }

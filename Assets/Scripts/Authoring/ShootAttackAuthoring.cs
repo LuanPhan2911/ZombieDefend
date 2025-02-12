@@ -5,6 +5,7 @@ public class ShootAttackAuthoring : MonoBehaviour
 {
 
     public float timerMax;
+    public int damgeAmount;
     public class ShootAttackAuthoringBaker : Baker<ShootAttackAuthoring>
     {
         public override void Bake(ShootAttackAuthoring authoring)
@@ -13,7 +14,8 @@ public class ShootAttackAuthoring : MonoBehaviour
             AddComponent(entity, new ShootAttack
             {
                 timer = authoring.timerMax,
-                timerMax = authoring.timerMax
+                timerMax = authoring.timerMax,
+                damgeAmount = authoring.damgeAmount
             });
         }
     }
@@ -23,6 +25,7 @@ public struct ShootAttack : IComponentData
 {
     public float timer;
     public float timerMax;
+    public int damgeAmount;
 }
 
 

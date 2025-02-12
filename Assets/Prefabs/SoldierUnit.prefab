@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8729207803768663263, guid: 01167b0bb02bc604697f6fa50727b3c3, type: 3}
       propertyPath: range
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8729207803768663263, guid: 01167b0bb02bc604697f6fa50727b3c3, type: 3}
       propertyPath: targetFaction
@@ -216,3 +216,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerMax: 0.2
+  damgeAmount: 5

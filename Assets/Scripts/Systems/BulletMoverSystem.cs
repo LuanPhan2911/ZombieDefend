@@ -3,7 +3,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-partial struct BulletSystem : ISystem
+partial struct BulletMoverSystem : ISystem
 {
 
 
@@ -15,6 +15,13 @@ partial struct BulletSystem : ISystem
         foreach (var (localTransform, bullet, target, entity)
             in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Bullet>, RefRO<Target>>().WithEntityAccess())
         {
+
+            if (target.ValueRO.targetEntity == Entity.Null)
+            {
+                commandBuffer.DestroyEntity(entity);
+                continue;
+            }
+
             LocalTransform targetLocalTransform = SystemAPI.GetComponent<LocalTransform>(target.ValueRO.targetEntity);
 
             float distanceSqBefore = math.distancesq(targetLocalTransform.Position, localTransform.ValueRO.Position);
