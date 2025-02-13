@@ -61,6 +61,12 @@ partial struct ShootAttackSystem : ISystem
             bulletTarget.ValueRW.targetEntity = target.ValueRO.targetEntity;
 
 
+            //trigeer on shoot event
+            shootAttack.ValueRW.onShoot.isTriggered = true;
+            shootAttack.ValueRW.onShoot.spawnerPosition = bulletSpawnPosition;
+
+
+
 
 
         }
