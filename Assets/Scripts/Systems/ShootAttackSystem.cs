@@ -12,7 +12,8 @@ partial struct ShootAttackSystem : ISystem
     {
         EntitiesReferences entitiesReferences = SystemAPI.GetSingleton<EntitiesReferences>();
         foreach (var (target, shootAttack, localTransform, unitMover) in
-            SystemAPI.Query<RefRO<Target>, RefRW<ShootAttack>, RefRW<LocalTransform>, RefRW<UnitMover>>())
+            SystemAPI.Query<RefRO<Target>, RefRW<ShootAttack>,
+            RefRW<LocalTransform>, RefRW<UnitMover>>().WithDisabled<UnitMoverOveride>())
         {
 
 
